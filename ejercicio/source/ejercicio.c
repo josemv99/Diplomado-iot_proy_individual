@@ -39,6 +39,7 @@
 #include "clock_config.h"
 #include "K32L2B31A.h"
 #include "fsl_debug_console.h"
+#include "led.h"
 /* TODO: insert other include files here. */
 
 /* TODO: insert other definitions and declarations here. */
@@ -48,6 +49,12 @@ float dato_float=3.1416;
 /*
  * @brief   Application entry point.
  */
+void delay(void){
+	uint32_t i;
+	for(i=0;i<0xFFFFF;i++){
+
+	}
+}
 int main(void) {
 
     /* Init board hardware. */
@@ -60,15 +67,19 @@ int main(void) {
 #endif
 
     PRINTF("Hello World\r\n");
-    PRINTF("test_global_var: %d\r\n",test_global_var);
-    PRINTF("dato_float: %g\r\n",dato_float);
+   /* PRINTF("test_global_var: %d\r\n",test_global_var);
+    PRINTF("dato_float: %g\r\n",dato_float);*/
 
     /* Force the counter to be placed into memory. */
     volatile static int i = 0 ;
     /* Enter an infinite loop, just incrementing a counter. */
     while(1) {
         i++ ;
-        PRINTF("i:%u\r\n",i);
+        led_on_green();
+        delay();
+        led_off_green();
+        delay();
+        //PRINTF("i:%u\r\n",i);
         /* 'Dummy' NOP to allow source level single stepping of
             tight while() loop */
         __asm volatile ("nop");
