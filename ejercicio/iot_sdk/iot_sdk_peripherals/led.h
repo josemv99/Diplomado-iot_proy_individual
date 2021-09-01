@@ -38,6 +38,8 @@
  ******************************************************************************/
 void led_on_green();
 void led_off_green();
+void led_on_red();
+void led_off_red();
 /** @} */ // end of X LEDS
 /** @} */ // end of X PERIPHERALS
 
