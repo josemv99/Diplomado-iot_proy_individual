@@ -43,7 +43,19 @@
 	 //encender led verde
 	 GPIO_PinWrite(GPIOD,5,0);
  }
+
  void led_off_green(){
 	 //apagar led verde
 	 GPIO_PinWrite(GPIOD,5,1);
  }
+
+ void led_on_red(){
+	 //encender led rojo
+	 GPIO_PinWrite(GPIOE,31,0);
+ }
+
+ void led_off_red(){
+	 //apagar led rojo
+	 GPIO_PinWrite(GPIOE,31,1);
+ }
+
