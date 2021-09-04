@@ -20,6 +20,8 @@
 #include "fsl_debug_console.h"
 #include "led.h"
 #include "sensor_de_luz.h"
+#include "irq_lptmr0.h"
+#include "botones.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -42,16 +44,13 @@
 
 unsigned int test_global_var=100;
 float dato_float=3.1416;
-uint32_t sensor_de_luz;
+
+
 /*
  * @brief   Application entry point.
  */
-void delay(void){
-	uint32_t i;
-	for(i=0;i<0xFFFFF;i++){
 
-	}
-}
+
 int main(void) {
 
     /* Init board hardware. */
@@ -63,32 +62,24 @@ int main(void) {
     BOARD_InitDebugConsole();
 #endif
 
-    PRINTF("Hello World\r\n");
-   /* PRINTF("test_global_var: %d\r\n",test_global_var);
-    PRINTF("dato_float: %g\r\n",dato_float);*/
-
     /* Force the counter to be placed into memory. */
     volatile static int i = 0 ;
-    unsigned char cont_LR = 0;
+    bool boton1,boton2;
+    uint32_t sensor_de_luz;
     /* Enter an infinite loop, just incrementing a counter. */
+    LPTMR_StartTimer(LPTMR0);
     while(1) {
-        i++ ;
-        led_on_green();
-        delay();
-        led_off_green();
-        delay();
-        if (i % 10 == 0){
-        	cont_LR++;
-        	if (cont_LR % 2 == 0){
-        		led_off_red();
-        	}else{
-        		led_on_red();
-        	}
-        }
-        sensor_de_luz = sensorDeLuzObtenerDatoADC();
-        PRINTF("adc: %u\r\n ", sensor_de_luz);
-
-        //PRINTF("i:%u\r\n",i);
+    	if(lptmr0_irq_counter != 0){
+    		toggle_led_red();
+    		lptmr0_irq_counter=0;
+            i++ ;
+            sensor_de_luz = sensorDeLuzObtenerDatoADC();
+            //PRINTF("adc: %u\r\n ", sensor_de_luz);
+            boton1 = boton1LeerEstado();
+            boton2 = boton2LeerEstado();
+            PRINTF("boton1: %u\r\n",boton1);
+            PRINTF("boton2: %u\r\n",boton2);
+    	}
         /* 'Dummy' NOP to allow source level single stepping of
             tight while() loop */
         __asm volatile ("nop");

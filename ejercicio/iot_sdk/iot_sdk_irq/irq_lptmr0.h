@@ -1,24 +1,24 @@
-/*! @file : led.h
+/*! @file : irq_lptmr0.h
  * @author  Jose Miguel Morales Vega
  * @version 1.0.0
- * @date    31/08/2021
- * @brief   Driver para para controlar leds de la tarjeta
+ * @date    4/09/2021
+ * @brief   Driver para 
  * @details
  *
  */
-#ifndef IOT_SDK_PERIPHERALS_LED_H_
-#define IOT_SDK_PERIPHERALS_LED_H_
+#ifndef IOT_SDK_IRQ_IRQ_LPTMR0_H_
+#define IOT_SDK_IRQ_IRQ_LPTMR0_H_
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-
+#include "peripherals.h"
 
 /*!
  * @addtogroup PERIPHERALS
  * @{
  */
 /*!
- * @addtogroup LEDS
+ * @addtogroup LPTMR
  * @{
  */
 /*******************************************************************************
@@ -28,7 +28,7 @@
 /*******************************************************************************
  * External vars
  ******************************************************************************/
-
+extern volatile uint32_t lptmr0_irq_counter;
 /*******************************************************************************
  * Public vars
  ******************************************************************************/
@@ -36,12 +36,8 @@
 /*******************************************************************************
  * Public Prototypes
  ******************************************************************************/
-void led_on_green();
-void led_off_green();
-/*void led_on_red();
-void led_off_red();*/
-void toggle_led_red();
-/** @} */ // end of X LEDS
+
+/** @} */ // end of X LPTMR
 /** @} */ // end of X PERIPHERALS
 
-#endif /* IOT_SDK_PERIPHERALS_LED_H_ */
+#endif /* IOT_SDK_IRQ_IRQ_LPTMR0_H_ */
