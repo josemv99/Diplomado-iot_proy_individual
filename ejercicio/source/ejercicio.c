@@ -19,6 +19,7 @@
 #include "K32L2B31A.h"
 #include "fsl_debug_console.h"
 #include "led.h"
+#include "sensor_de_luz.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -41,6 +42,7 @@
 
 unsigned int test_global_var=100;
 float dato_float=3.1416;
+uint32_t sensor_de_luz;
 /*
  * @brief   Application entry point.
  */
@@ -83,6 +85,9 @@ int main(void) {
         		led_on_red();
         	}
         }
+        sensor_de_luz = sensorDeLuzObtenerDatoADC();
+        PRINTF("adc: %u\r\n ", sensor_de_luz);
+
         //PRINTF("i:%u\r\n",i);
         /* 'Dummy' NOP to allow source level single stepping of
             tight while() loop */
