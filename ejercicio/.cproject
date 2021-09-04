@@ -137,6 +137,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk/iot_sdk_peripherals}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk/iot_sdk_irq}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.files.1352722013" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" useByScannerDiscovery="false"/>
 								<option id="com.crt.advproject.gcc.exe.debug.option.optimization.level.86493431" name="Optimization Level" superClass="com.crt.advproject.gcc.exe.debug.option.optimization.level" useByScannerDiscovery="true"/>
@@ -201,6 +202,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/source}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk/iot_sdk_peripherals}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk/iot_sdk_irq}&quot;"/>
 								</option>
 								<option id="gnu.both.asm.option.warnings.nowarn.890588163" name="Suppress warnings (-W)" superClass="gnu.both.asm.option.warnings.nowarn"/>
 								<option id="gnu.both.asm.option.version.405483828" name="Announce version (-v)" superClass="gnu.both.asm.option.version"/>
@@ -484,6 +486,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk/iot_sdk_peripherals}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk/iot_sdk_irq}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.include.files.181847143" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" useByScannerDiscovery="false"/>
 								<option id="gnu.c.compiler.option.optimization.flags.1850687929" name="Other optimization flags" superClass="gnu.c.compiler.option.optimization.flags" useByScannerDiscovery="false" value="-fno-common" valueType="string"/>
@@ -546,6 +549,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/source}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk/iot_sdk_peripherals}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ejercicio/iot_sdk/iot_sdk_irq}&quot;"/>
 								</option>
 								<option id="gnu.both.asm.option.warnings.nowarn.1394536536" name="Suppress warnings (-W)" superClass="gnu.both.asm.option.warnings.nowarn"/>
 								<option id="gnu.both.asm.option.version.392593158" name="Announce version (-v)" superClass="gnu.both.asm.option.version"/>
