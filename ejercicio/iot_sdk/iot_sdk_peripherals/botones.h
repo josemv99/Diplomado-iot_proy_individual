@@ -38,6 +38,8 @@
  ******************************************************************************/
 bool boton1LeerEstado();
 bool boton2LeerEstado();
+
+
 /** @} */ // end of X BOTONES
 /** @} */ // end of X PERIPHERALS
 

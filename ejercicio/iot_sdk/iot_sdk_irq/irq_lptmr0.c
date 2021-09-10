@@ -25,7 +25,7 @@
  * External vars
  ******************************************************************************/
 volatile uint32_t lptmr0_irq_counter;
-
+volatile uint32_t LR_counter;
 /*******************************************************************************
  * Local vars
  ******************************************************************************/
@@ -41,6 +41,7 @@ void LPTMR0_IRQHANDLER(void) {
   LPTMR_ClearStatusFlags(LPTMR0_PERIPHERAL, intStatus);
 
   lptmr0_irq_counter++;
+  LR_counter +=10;
 
   /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F
      Store immediate overlapping exception return operation might vector to incorrect interrupt. */
