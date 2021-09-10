@@ -1,7 +1,7 @@
-/*! @file : irq_lptmr0.c
+/*! @file : sensor_de_temperatura.c
  * @author  Jose Miguel Morales Vega
  * @version 1.0.0
- * @date    4/09/2021
+ * @date    8/09/2021
  * @brief   Driver para 
  * @details
  *
@@ -9,7 +9,7 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-#include "irq_lptmr0.h"
+#include "sensor_de_temperatura.h"
 
 /*******************************************************************************
  * Definitions
@@ -19,13 +19,24 @@
 /*******************************************************************************
  * Private Prototypes
  ******************************************************************************/
+void sensorDeTemperaturaIniciarCaptura(void){
+	 ADC16_SetChannelConfig(SENSOR_DE_TEMPERATURA_ADC16_BASE, SENSOR_DE_TEMPERATURA_ADC16_CHANNEL_GROUP, &ADC0_channelsConfig[1]);
+ }
+
+
+ void sensorDeTemperaturaEsperarResultado(void){
+	 while (0U == (kADC16_ChannelConversionDoneFlag &
+	                      ADC16_GetChannelStatusFlags(SENSOR_DE_TEMPERATURA_ADC16_BASE, SENSOR_DE_TEMPERATURA_ADC16_CHANNEL_GROUP)))
+	        {
+	        }
+ }
 
 
 /*******************************************************************************
  * External vars
  ******************************************************************************/
-volatile uint32_t lptmr0_irq_counter;
-volatile uint32_t LR_counter;
+
+
 /*******************************************************************************
  * Local vars
  ******************************************************************************/
@@ -34,23 +45,16 @@ volatile uint32_t LR_counter;
 /*******************************************************************************
  * Private Source Code
  ******************************************************************************/
-void LPTMR0_IRQHANDLER(void) {
-  uint32_t intStatus;
-  /* Reading all interrupt flags of status register */
-  intStatus = LPTMR_GetStatusFlags(LPTMR0_PERIPHERAL);
-  LPTMR_ClearStatusFlags(LPTMR0_PERIPHERAL, intStatus);
 
-  lptmr0_irq_counter++;
-  LR_counter +=10;
-
-  /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F
-     Store immediate overlapping exception return operation might vector to incorrect interrupt. */
-  #if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-  #endif
-}
 
 /*******************************************************************************
  * Public Source Code
  ******************************************************************************/
- 
+ uint32_t sensorDeTemperaturaObtenerDatoADC(void){
+ 	 sensorDeTemperaturaIniciarCaptura();
+ 	 sensorDeTemperaturaEsperarResultado();
+ 	 uint32_t resultadoADC;
+ 			 resultadoADC = ADC16_GetChannelConversionValue(SENSOR_DE_TEMPERATURA_ADC16_BASE, SENSOR_DE_TEMPERATURA_ADC16_CHANNEL_GROUP);
+ 			 return(resultadoADC);
+  }
+
