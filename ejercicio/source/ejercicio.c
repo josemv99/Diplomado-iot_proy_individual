@@ -23,10 +23,19 @@
 #include "irq_lptmr0.h"
 #include "botones.h"
 #include "sensor_de_temperatura.h"
+#include "irq_lpuart0.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
+enum _ec25_lista_comandos_at {
+    kAT = 0,
+    kATI,
+    kAT_CPIN,
+    kAT_CREG,
+    kAT_CMGF_1,
+    kAT_CMGS,
+    kAT_TEXT_MSG_END,
+};
 /*******************************************************************************
  * Private Prototypes
  ******************************************************************************/
@@ -38,14 +47,25 @@
 /*******************************************************************************
  * Local vars
  ******************************************************************************/
+//Listado de comando AT disponibles para ser enviados al modem Quectel
+const char *ec25_comandos_at[] = {
+    "AT",            //comprueba disponibilidad de dispositivo
+    "ATI",            //consulta información del modem
+    "AT+CPIN?",        //consulta estado de la simcard
+    "AT+CREG?",        //consulta estado de la red celular y tecnología usada en red celular
+    "AT+CMGF=1",    //asigna modo texto para enviar mensajes
+    "AT+CMGS=\"300xxxxxxx\"",//envia mensaje de texto a numero definido
+    "Mensaje",         //MENSAJE & CTRL+Z
+    };
+
+const char *comandos_control[] = {
+    "LED VERDE ON",            //ensiende led
+    "LED VERDE OFF",            //apaga el led
+    };
 
 /*******************************************************************************
  * Private Source Code
  ******************************************************************************/
-
-unsigned int test_global_var=100;
-float dato_float=3.1416;
-
 
 /*
  * @brief   Application entry point.
@@ -53,7 +73,10 @@ float dato_float=3.1416;
 
 
 int main(void) {
-
+    volatile static int i = 0 ;
+    bool boton1,boton2;
+    uint32_t sensor_de_luz;
+    uint8_t nuevo_byte_lpuart0;
     /* Init board hardware. */
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
@@ -62,49 +85,23 @@ int main(void) {
     /* Init FSL debug console. */
     BOARD_InitDebugConsole();
 #endif
-
-    /* Force the counter to be placed into memory. */
-    volatile static int i = 0 ;
-    volatile char boton1_aux, boton2_aux;
-    bool boton1,boton2;
-    uint32_t sensor_de_luz;
-    uint32_t sensor_de_temperatura;
-    float volt_temperatura, volt_luz;
-    unsigned char temperatura,iluminancia;
+    PRINTF("Jose Morales Iniciando...\r\n");
+    PRINTF("%s\r\n", ec25_comandos_at[kAT_CREG]);
     /* Enter an infinite loop, just incrementing a counter. */
-    LPTMR_StartTimer(LPTMR0);
+   //LPTMR_StartTimer(LPTMR0);
     while(1) {
+    	if (numeroByteDisponiblesBuffer() != 0){
+    		nuevo_byte_lpuart0 = pullByteDesdeBuffer();
+    		PRINTF("nuevo byte: %c\r\n", nuevo_byte_lpuart0);
+    	}
     	if(lptmr0_irq_counter != 0){
+    		toggle_led_red();
     		lptmr0_irq_counter=0;
     		i++ ;
-    		sensor_de_temperatura = sensorDeTemperaturaObtenerDatoADC();
-    		volt_temperatura = (3 * sensor_de_temperatura)/4095;
-    		temperatura = (volt_temperatura * 90)/3.3;
     		sensor_de_luz = sensorDeLuzObtenerDatoADC();
-    		volt_luz = (3.3 * sensor_de_luz);
-    		iluminancia = (2*(3.3 - volt_luz))*100;
+    		//PRINTF("la intensidad de luz es: %d\r\n", sensor_de_luz);
             boton1 = boton1LeerEstado();
             boton2 = boton2LeerEstado();
-          if (boton1 && !boton1_aux){
-            	boton1_aux = 1;
-            	PRINTF("la temperatura es: %d", temperatura);
-            	PRINTF(" °C\r\n");
-            }
-           if (!boton1){
-        	   boton1_aux = 0;
-           }
-             if (boton2 && !boton2_aux){
-             	boton2_aux = 1;
-            	PRINTF("la intensidad de luz es: %d", iluminancia);
-            	PRINTF(" Lux\r\n");
-            }
-             if (!boton2){
-                boton2_aux = 0;
-             }
-            if (LR_counter == 1000){
-            	LR_counter = 0;
-            	toggle_led_red();
-            }
     	}
         /* 'Dummy' NOP to allow source level single stepping of
             tight while() loop */
